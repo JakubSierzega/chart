@@ -4,6 +4,7 @@ import * as am4themesKelly from '@amcharts/amcharts4/themes/kelly';
 import {useLayoutEffect, useRef, useState} from "react";
 import {getChartConfig} from "./chartConfig";
 import {data} from "./data";
+import SomeChart from "./SomeChart";
 
 am4core.useTheme(am4themesKelly.default);
 
@@ -24,7 +25,7 @@ function App() {
     return (
         <>
             <div className="chartdiv" style={{minWidth: '350px', height: '350px'}} ref={chartRef}/>
-            {/*<SomeChart />*/}
+            <SomeChart />
         </>
     );
 }
