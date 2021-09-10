@@ -1,25 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import * as am4core from '@amcharts/amcharts4/core';
+import * as am4themesKelly from '@amcharts/amcharts4/themes/kelly';
+import {useLayoutEffect, useRef, useState} from "react";
+import {getChartConfig} from "./chartConfig";
+import {data} from "./data";
+
+am4core.useTheme(am4themesKelly.default);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const chartRef = useRef(null);
+    const [chart, setChart] = useState();
+
+    useLayoutEffect(() => {
+        const chartConfig = getChartConfig(data, () => {},() => {});
+        setChart(am4core.createFromConfig(chartConfig, chartRef.current));
+        return () => {
+            if (chart) {
+                chart.dispose();
+            }
+        };
+    }, [chartRef.current]);
+
+    return (
+        <>
+            <div className="chartdiv" style={{minWidth: '350px', height: '350px'}} ref={chartRef}/>
+            {/*<SomeChart />*/}
+        </>
+    );
 }
 
 export default App;
